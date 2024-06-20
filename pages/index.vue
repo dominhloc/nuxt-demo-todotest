@@ -4,9 +4,9 @@ import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useTodos } from "../stores/todo.js";
 
-const todosStore = useTodos();
-const { filter, filteredTodos } = storeToRefs(todosStore);
+const { filter, filteredTodos } = storeToRefs(useTodos());
 
+const todosStore = useTodos();
 const newTodoText = ref("");
 
 function addTodo() {
