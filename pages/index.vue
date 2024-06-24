@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
+// @ts-ignore
 import { storeToRefs } from "pinia";
 import { useTodos } from "../stores/todo.js";
 import PiniaLogo from "../components/PiniaLogo.vue";
@@ -119,7 +120,7 @@ function setFilter(value) {
               />
             </div>
             <div
-              class="flex-1 flex ml-2 h-7 font-serif font-semibold items-center"
+              class="flex-1 flex ml-2 h-fit w-3 overflow-x-auto font-serif font-semibold items-center"
               :class="
                 todo.isFinished ? ' line-through text-blue-600' : 'text-black'
               "
