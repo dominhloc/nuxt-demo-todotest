@@ -81,6 +81,9 @@ export const useTodos = defineStore("todos", {
       this.nextId++; // Tăng ID tiếp theo lên để chuẩn bị cho todo tiếp theo
       // @ts-ignore
       this.saveTodos(); // Lưu lại danh sách todo vào localStorage
+
+      // Trả về input trắng sau khi thêm todo thành công
+      return "";
     },
 
     deleteTodo(id) {
