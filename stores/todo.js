@@ -70,9 +70,9 @@ export const useTodos = defineStore("todos", {
       this.loadTodos();
     },
 
-    addTodo() {
+    addTodo(text) {
       const newTodo = {
-        text: this.todoText, // Sử dụng giá trị của input text
+        text,
         id: this.nextId.toString(),
         isFinished: false,
         isFavorite: false,
@@ -82,11 +82,8 @@ export const useTodos = defineStore("todos", {
       // @ts-ignore
       this.saveTodos(); // Lưu lại danh sách todo vào localStorage
 
-      // Đặt lại giá trị của input text thành rỗng để xóa input đầu vào
-      this.todoText = "";
-
-      // Trả về input trắng sau khi thêm todo thành công
-      return "";
+      // Xóa nội dung trong input sau khi thêm todo thành công
+      document.querySelector('input[type="text"]').value = ""; // Xóa giá trị trong input
     },
 
     deleteTodo(id) {
