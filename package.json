@@ -18,6 +18,9 @@
     "vue-router": "^4.3.3"
   },
   "overrides": {
-  "vue": "latest"
-}
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0"
+  }
 }

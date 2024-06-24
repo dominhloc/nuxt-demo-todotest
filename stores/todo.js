@@ -1,12 +1,9 @@
 import { defineStore } from "pinia";
 
-const API_URL = "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST";
-
+// @ts-ignore
 export const useTodos = defineStore("todos", {
   state: () => ({
-    /** @type {{ text: string, id: string, isFinished: boolean, isFavorite: boolean }[]} */
     todos: [],
-    /** @type {'all' | 'finished' | 'unfinished'} */
     filter: "all",
     nextId: 0,
   }),
@@ -17,104 +14,71 @@ export const useTodos = defineStore("todos", {
     unfinishedTodos(state) {
       return state.todos.filter((todo) => !todo.isFinished);
     },
-    /**
-     * @returns {{ text: string, id: string, isFinished: boolean, isFavorite: boolean }[]}
-     */
     filteredTodos(state) {
       if (state.filter === "finished") {
-        // @ts-ignore
-        return state.finishedTodos;
+        return state.todos.filter((todo) => todo.isFinished);
       } else if (state.filter === "unfinished") {
-        // @ts-ignore
-        return state.unfinishedTodos;
+        return state.todos.filter((todo) => !todo.isFinished);
       }
       return state.todos;
     },
   },
   actions: {
+    loadTodos() {
+      if (process) {
+        const storedTodos = localStorage.getItem("todos");
+        if (storedTodos) {
+          this.todos = JSON.parse(storedTodos);
+        }
+        const storedNextId = localStorage.getItem("nextId");
+        if (storedNextId) {
+          this.nextId = Number(storedNextId);
+        }
+      }
+    },
+    saveTodos() {
+      if (process) {
+        localStorage.setItem("todos", JSON.stringify(this.todos));
+        localStorage.setItem("nextId", this.nextId.toString());
+      }
+    },
     async fetchTodos() {
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-          throw new Error("Failed to fetch todos");
-        }
-        const data = await response.json();
-        this.todos = data;
-      } catch (error) {
-        console.error("Failed to fetch todos:", error);
-      }
+      // @ts-ignore
+      this.loadTodos();
     },
-    async addTodo(text) {
-      try {
-        const newTodo = { text, isFinished: false, isFavorite: false };
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newTodo),
-        });
-        if (!response.ok) {
-          throw new Error("Failed to add todo");
-        }
-        const data = await response.json();
-        this.todos.push(data);
-      } catch (error) {
-        console.error("Failed to add todo:", error);
-      }
+    addTodo(text) {
+      const newTodo = {
+        text,
+        id: this.nextId.toString(),
+        isFinished: false,
+        isFavorite: false,
+      };
+      this.todos.push(newTodo);
+      this.nextId++;
+      // @ts-ignore
+      this.saveTodos();
     },
-    async deleteTodo(id) {
-      try {
-        const response = await fetch(`${API_URL}/${id}`, {
-          method: "DELETE",
-        });
-        if (!response.ok) {
-          throw new Error("Failed to delete todo");
-        }
-        this.todos = this.todos.filter((todo) => todo.id !== id);
-      } catch (error) {
-        console.error("Failed to delete todo:", error);
-      }
+    deleteTodo(id) {
+      this.todos = this.todos.filter((todo) => todo.id !== id);
+      // @ts-ignore
+      this.saveTodos();
     },
-    async toggleFavorite(id) {
+    toggleFavorite(id) {
       const todo = this.todos.find((todo) => todo.id === id);
-      if (!todo) return;
-      try {
-        const updatedTodo = { ...todo, isFavorite: !todo.isFavorite };
-        const response = await fetch(`${API_URL}/${id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedTodo),
-        });
-        if (!response.ok) {
-          throw new Error("Failed to toggle favorite");
-        }
+      if (todo) {
         todo.isFavorite = !todo.isFavorite;
-      } catch (error) {
-        console.error("Failed to toggle favorite:", error);
+        // @ts-ignore
+        this.saveTodos();
       }
     },
-    async toggleFinished(id) {
+    toggleFinished(id) {
       const todo = this.todos.find((todo) => todo.id === id);
-      if (!todo) return;
-      try {
-        const updatedTodo = { ...todo, isFinished: !todo.isFinished };
-        const response = await fetch(`${API_URL}/${id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedTodo),
-        });
-        if (!response.ok) {
-          throw new Error("Failed to toggle finished");
-        }
+      if (todo) {
         todo.isFinished = !todo.isFinished;
-      } catch (error) {
-        console.error("Failed to toggle finished:", error);
+        // @ts-ignore
+        this.saveTodos();
       }
     },
   },
+  persist: true,
 });
