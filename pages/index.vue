@@ -2,58 +2,66 @@
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useTodos } from "../stores/todo.js";
-import PiniaLogo from "../components/PiniaLogo.vue";
+// import PiniaLogo from "../components/PiniaLogo.vue";
 
 // @ts-ignore
+// Sử dụng store `useTodos` từ Pinia
 const { filter, filteredTodos } = storeToRefs(useTodos());
 
-const todosStore = useTodos();
-const newTodoText = ref("");
+// Khai báo các biến và thực hiện các thao tác liên quan đến todos
+const todosStore = useTodos(); // Sử dụng store todos từ Pinia
+const newTodoText = ref(""); // Biến để lưu trữ nội dung của todo mới
 
+// Hàm được gọi khi component được mounted
 onMounted(() => {
   // @ts-ignore
-  todosStore.fetchTodos();
+  todosStore.fetchTodos(); // Gọi hàm fetchTodos từ store để tải danh sách todos
 });
 
+// Hàm để thêm một todo mới
 function addTodo() {
   if (!newTodoText.value) {
-    return;
+    return; // Nếu không có nội dung todo mới thì không làm gì cả
   }
 
   // @ts-ignore
-  todosStore.addTodo(newTodoText.value);
-  newTodoText.value = "";
+  todosStore.addTodo(newTodoText.value); // Gọi hàm addTodo từ store để thêm todo mới
+  newTodoText.value = ""; // Xóa nội dung trong input sau khi thêm todo
 }
 
 /**
  * @param {any} id
  */
+// Hàm để xóa một todo
 function deleteTodo(id) {
   // @ts-ignore
-  todosStore.deleteTodo(id);
+  todosStore.deleteTodo(id); // Gọi hàm deleteTodo từ store để xóa todo với id tương ứng
 }
 
 /**
  * @param {any} id
  */
+// Hàm để đánh dấu một todo là yêu thích hoặc bỏ yêu thích
 function toggleFavorite(id) {
   // @ts-ignore
-  todosStore.toggleFavorite(id);
+  todosStore.toggleFavorite(id); // Gọi hàm toggleFavorite từ store để thay đổi trạng thái yêu thích của todo
 }
 
 /**
  * @param {any} id
  */
+// Hàm để đánh dấu một todo là đã hoàn thành hoặc chưa hoàn thành
 function toggleFinished(id) {
   // @ts-ignore
-  todosStore.toggleFinished(id);
+  todosStore.toggleFinished(id); // Gọi hàm toggleFinished từ store để thay đổi trạng thái hoàn thành của todo
 }
 
 /**
  * @param {string} value
  */
+// Hàm để đặt bộ lọc cho danh sách todos
 function setFilter(value) {
-  filter.value = value;
+  filter.value = value; // Gán giá trị bộ lọc vào biến filter trong store
 }
 </script>
 
@@ -130,7 +138,7 @@ function setFilter(value) {
             <div
               class="flex-1 flex ml-2 h-7 font-serif font-semibold items-center"
               :class="
-                todo.isFinished ? 'line-through text-blue-600' : 'text-black'
+                todo.isFinished ? ' line-through text-blue-600' : 'text-black'
               "
             >
               {{ todo.text }}
@@ -176,11 +184,11 @@ function setFilter(value) {
       >
         <button
           :class="[
-            'w-28 rounded-full  hover:scale-110 duration-300 hover:font-semibold shadow-md',
+            'w-28 rounded-full  hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
             // @ts-ignore
             filter === 'all'
               ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
-              : 'bg-gray-300 hover:bg-gray-400 duration-300',
+              : 'bg-gray-200 hover:bg-gray-400 duration-300',
           ]"
           @click="setFilter('all')"
         >
@@ -188,11 +196,11 @@ function setFilter(value) {
         </button>
         <button
           :class="[
-            'w-28 rounded-full  hover:scale-110 duration-300 hover:font-semibold shadow-md',
+            'w-28 rounded-full hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
             // @ts-ignore
             filter === 'finished'
               ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
-              : 'bg-gray-300 hover:bg-gray-400 duration-300',
+              : 'bg-gray-200 hover:bg-gray-400 duration-300',
           ]"
           @click="setFilter('finished')"
         >
@@ -200,11 +208,11 @@ function setFilter(value) {
         </button>
         <button
           :class="[
-            'w-28 rounded-full hover:scale-110 duration-300 hover:font-semibold shadow-md',
+            'w-28 rounded-full hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
             // @ts-ignore
             filter === 'unfinished'
               ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
-              : 'bg-gray-300 hover:bg-gray-400 duration-300',
+              : 'bg-gray-200 hover:bg-gray-400 duration-300',
           ]"
           @click="setFilter('unfinished')"
         >
