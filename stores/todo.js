@@ -8,7 +8,7 @@ export const useTodos = defineStore("todos", {
   state: () => ({
     todos: [], // Danh sách các todo
     filter: "all", // Bộ lọc hiện tại của todo (có thể là "all", "finished", "unfinished")
-    nextId: 0, // ID tiếp theo cho todo mới
+    nextId: "0", // ID tiếp theo cho todo mới (để là chuỗi)
   }),
 
   // Định nghĩa getters để lấy dữ liệu từ state
@@ -44,28 +44,28 @@ export const useTodos = defineStore("todos", {
   // Định nghĩa các actions để thay đổi state và thực hiện các tác vụ khác
   actions: {
     loadTodos() {
-      // Kiểm tra process tồn tại (cho phép dùng localStorage trong trình duyệt)
-      if (process) {
+      // Kiểm tra nếu localStorage tồn tại
+      if (typeof localStorage !== "undefined") {
         const storedTodos = localStorage.getItem("todos");
         if (storedTodos) {
           this.todos = JSON.parse(storedTodos); // Đọc danh sách todo từ localStorage
         }
         const storedNextId = localStorage.getItem("nextId");
         if (storedNextId) {
-          this.nextId = Number(storedNextId); // Đọc ID tiếp theo từ localStorage
+          this.nextId = storedNextId; // Đọc ID tiếp theo từ localStorage (giữ nguyên là chuỗi)
         }
       }
     },
+
     saveTodos() {
-      // Kiểm tra process.client tồn tại (đang chạy trên client-side)
-      if (process) {
+      // Kiểm tra nếu localStorage tồn tại
+      if (typeof localStorage !== "undefined") {
         localStorage.setItem("todos", JSON.stringify(this.todos)); // Lưu danh sách todo vào localStorage
-        localStorage.setItem("nextId", this.nextId.toString()); // Lưu ID tiếp theo vào localStorage
+        localStorage.setItem("nextId", this.nextId); // Lưu ID tiếp theo vào localStorage (giữ nguyên là chuỗi)
       }
     },
 
     async fetchTodos() {
-      // @ts-ignore
       // Gọi action loadTodos để tải danh sách todo từ localStorage
       this.loadTodos();
     },
@@ -73,19 +73,17 @@ export const useTodos = defineStore("todos", {
     addTodo(text) {
       const newTodo = {
         text,
-        id: this.nextId.toString(),
+        id: this.nextId.toString(), // Đảm bảo nextId là chuỗi khi thêm mới todo
         isFinished: false,
         isFavorite: false,
       };
       this.todos.push(newTodo); // Thêm todo mới vào danh sách
-      this.nextId++; // Tăng ID tiếp theo lên để chuẩn bị cho todo tiếp theo
-      // @ts-ignore
+      this.nextId = (parseInt(this.nextId, 10) + 1).toString(); // Tăng nextId lên và chuyển thành chuỗi để lưu vào localStorage
       this.saveTodos(); // Lưu lại danh sách todo vào localStorage
     },
 
     deleteTodo(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id); // Xóa todo dựa trên ID
-      // @ts-ignore
       this.saveTodos(); // Lưu lại danh sách todo sau khi xóa vào localStorage
     },
 
@@ -93,7 +91,6 @@ export const useTodos = defineStore("todos", {
       const todo = this.todos.find((todo) => todo.id === id);
       if (todo) {
         todo.isFavorite = !todo.isFavorite; // Đảo ngược trạng thái yêu thích của todo
-        // @ts-ignore
         this.saveTodos(); // Lưu lại trạng thái mới vào localStorage
       }
     },
@@ -102,11 +99,11 @@ export const useTodos = defineStore("todos", {
       const todo = this.todos.find((todo) => todo.id === id);
       if (todo) {
         todo.isFinished = !todo.isFinished; // Đảo ngược trạng thái hoàn thành của todo
-        // @ts-ignore
         this.saveTodos(); // Lưu lại trạng thái mới vào localStorage
       }
     },
   },
+
   // Lựa chọn persist: true để Pinia tự động lưu trữ và khôi phục state khi cần thiết
   persist: true,
 });
