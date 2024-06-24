@@ -2,9 +2,8 @@
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useTodos } from "../stores/todo.js";
-// import PiniaLogo from "../components/PiniaLogo.vue";
+import PiniaLogo from "../components/PiniaLogo.vue";
 
-// @ts-ignore
 // Sử dụng store `useTodos` từ Pinia
 const { filter, filteredTodos } = storeToRefs(useTodos());
 
@@ -14,7 +13,6 @@ const newTodoText = ref(""); // Biến để lưu trữ nội dung của todo m�
 
 // Hàm được gọi khi component được mounted
 onMounted(() => {
-  // @ts-ignore
   todosStore.fetchTodos(); // Gọi hàm fetchTodos từ store để tải danh sách todos
 });
 
@@ -23,42 +21,27 @@ function addTodo() {
   if (!newTodoText.value) {
     return; // Nếu không có nội dung todo mới thì không làm gì cả
   }
-
-  // @ts-ignore
   todosStore.addTodo(newTodoText.value); // Gọi hàm addTodo từ store để thêm todo mới
   newTodoText.value = ""; // Xóa nội dung trong input sau khi thêm todo
 }
 
-/**
- * @param {any} id
- */
 // Hàm để xóa một todo
 function deleteTodo(id) {
-  // @ts-ignore
   todosStore.deleteTodo(id); // Gọi hàm deleteTodo từ store để xóa todo với id tương ứng
 }
 
-/**
- * @param {any} id
- */
 // Hàm để đánh dấu một todo là yêu thích hoặc bỏ yêu thích
 function toggleFavorite(id) {
-  // @ts-ignore
-  todosStore.toggleFavorite(id); // Gọi hàm toggleFavorite từ store để thay đổi trạng thái yêu thích của todo
+  // Gọi hàm toggleFavorite từ store để thay đổi trạng thái yêu thích của todo
+  todosStore.toggleFavorite(id);
 }
 
-/**
- * @param {any} id
- */
 // Hàm để đánh dấu một todo là đã hoàn thành hoặc chưa hoàn thành
 function toggleFinished(id) {
-  // @ts-ignore
-  todosStore.toggleFinished(id); // Gọi hàm toggleFinished từ store để thay đổi trạng thái hoàn thành của todo
+  // Gọi hàm toggleFinished từ store để thay đổi trạng thái hoàn thành của todo
+  todosStore.toggleFinished(id);
 }
 
-/**
- * @param {string} value
- */
 // Hàm để đặt bộ lọc cho danh sách todos
 function setFilter(value) {
   filter.value = value; // Gán giá trị bộ lọc vào biến filter trong store
