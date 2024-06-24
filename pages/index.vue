@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useTodos } from "../stores/todo.js";
+import PiniaLogo from "../components/PiniaLogo.vue";
 
 // @ts-ignore
 const { filter, filteredTodos } = storeToRefs(useTodos());
@@ -48,6 +49,9 @@ function toggleFinished(id) {
   todosStore.toggleFinished(id);
 }
 
+/**
+ * @param {string} value
+ */
 function setFilter(value) {
   filter.value = value;
 }
@@ -57,16 +61,24 @@ function setFilter(value) {
   <div
     class="h-screen w-screen bg-slate-200 flex-col flex justify-center items-center"
   >
-    <div class="p-5 h-[450px] w-96 bg-white rounded-md shadow-2xl">
-      <div class="flex flex-col rounded-md">
-        <div class="text-2xl font-serif font-semibold flex justify-center">
+    <div class="p-4 h-fit w-96 bg-white rounded-md shadow-2xl">
+      <div class="flex flex-row justify-center items-center rounded-md mb-2">
+        <div>
+          <PiniaLogo />
+        </div>
+        <div
+          class="text-2xl h-fit mt-2 font-serif font-semibold flex justify-center items-center"
+        >
           New Todo
         </div>
+        <div>
+          <PiniaLogo />
+        </div>
       </div>
-      <div class="flex space-x-2 flex-row justify-center">
+      <div class="flex space-x-2 flex-row justify-center h-8">
         <label>
           <input
-            class="border rounded-md p-1 w-72 bg-slate-200"
+            class="border rounded-md p-1 h-8 w-72 bg-slate-200 flex justify-center items-center"
             v-model="newTodoText"
             type="text"
             @keypress.enter="addTodo"
@@ -100,8 +112,8 @@ function setFilter(value) {
           </div>
         </button>
       </div>
-      <div class="h-[280px] overflow-auto mt-5 border rounded-md">
-        <div class="space-y-4 rounded-md">
+      <div class="h-[280px] overflow-auto mt-4 border rounded-md">
+        <div class="space-y-3 rounded-md">
           <li
             v-for="todo in filteredTodos"
             :key="todo.id"
@@ -112,11 +124,11 @@ function setFilter(value) {
                 :checked="todo.isFinished"
                 @change="toggleFinished(todo.id)"
                 type="checkbox"
-                class="h-4 w-4"
+                class="h-4 w-4 hover:scale-125 duration-300"
               />
             </div>
             <div
-              class="flex-1 flex ml-2 font-serif font-semibold items-center"
+              class="flex-1 flex ml-2 h-7 font-serif font-semibold items-center"
               :class="
                 todo.isFinished ? 'line-through text-blue-600' : 'text-black'
               "
@@ -159,10 +171,12 @@ function setFilter(value) {
         </div>
       </div>
       <!-- Filter buttons -->
-      <div class="flex justify-center space-x-3 mt-5 rounded-md">
+      <div
+        class="flex justify-center space-x-3 mt-4 h-8 text-blue-600 font-semibold"
+      >
         <button
           :class="[
-            'w-28 rounded-md  hover:scale-110 duration-300 hover:font-semibold',
+            'w-28 rounded-full  hover:scale-110 duration-300 hover:font-semibold shadow-md',
             // @ts-ignore
             filter === 'all'
               ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
@@ -170,11 +184,11 @@ function setFilter(value) {
           ]"
           @click="setFilter('all')"
         >
-          All
+          All Todos
         </button>
         <button
           :class="[
-            'w-28 rounded-md  hover:scale-110 duration-300 hover:font-semibold',
+            'w-28 rounded-full  hover:scale-110 duration-300 hover:font-semibold shadow-md',
             // @ts-ignore
             filter === 'finished'
               ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
@@ -186,7 +200,7 @@ function setFilter(value) {
         </button>
         <button
           :class="[
-            'w-28 h-8 rounded-md hover:scale-110 duration-300 hover:font-semibold',
+            'w-28 rounded-full hover:scale-110 duration-300 hover:font-semibold shadow-md',
             // @ts-ignore
             filter === 'unfinished'
               ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'

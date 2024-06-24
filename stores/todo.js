@@ -37,7 +37,7 @@ export const useTodos = defineStore("todos", {
       }
     },
     saveTodos() {
-      if (process) {
+      if (process.client) {
         localStorage.setItem("todos", JSON.stringify(this.todos));
         localStorage.setItem("nextId", this.nextId.toString());
       }

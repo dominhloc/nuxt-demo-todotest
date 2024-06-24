@@ -222,7 +222,7 @@ onMounted(() => {
       }
     }
     setTimeout(blinkHandler, 0);
-  }, 3000);
+  }, 1500);
 
   onUnmounted(() => {
     clearInterval(timerId);
@@ -244,7 +244,7 @@ onMounted(() => {
       }
     }
     setTimeout(blinkHandler, 0);
-  }, 5000);
+  }, 1000);
   onUnmounted(() => {
     clearInterval(talkingTimer);
   });
