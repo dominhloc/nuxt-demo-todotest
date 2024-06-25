@@ -124,7 +124,7 @@ function setFilter(value) {
                 todo.isFinished ? 'line-through text-blue-600' : 'text-black'
               "
             >
-              <div class="break-words w-56">
+              <div class="break-all w-56">
                 {{ todo.text }}
               </div>
             </div>
