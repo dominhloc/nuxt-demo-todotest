@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from "vue";
-// @ts-ignore
 import { storeToRefs } from "pinia";
 import { useTodos } from "../stores/todo.js";
 import PiniaLogo from "../components/PiniaLogo.vue";
@@ -170,7 +169,6 @@ function setFilter(value) {
         <button
           :class="[
             'w-28 rounded-full  hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
-            // @ts-ignore
             filter === 'all'
               ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
               : 'bg-gray-200 hover:bg-gray-400 duration-300',
@@ -182,7 +180,6 @@ function setFilter(value) {
         <button
           :class="[
             'w-28 rounded-full hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
-            // @ts-ignore
             filter === 'finished'
               ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
               : 'bg-gray-200 hover:bg-gray-400 duration-300',
@@ -194,7 +191,6 @@ function setFilter(value) {
         <button
           :class="[
             'w-28 rounded-full hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
-            // @ts-ignore
             filter === 'unfinished'
               ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
               : 'bg-gray-200 hover:bg-gray-400 duration-300',
