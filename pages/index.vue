@@ -50,7 +50,7 @@ function setFilter(value) {
 
 <template>
   <div
-    class="h-screen w-screen bg-slate-200 flex-col flex justify-center items-center"
+    class="h-screen w-screen bg-gradient-to-r from-purple-500 to-pink-500 flex-col flex justify-center items-center"
   >
     <div class="p-4 h-fit w-96 bg-white rounded-md shadow-2xl">
       <div class="flex flex-row justify-center items-center rounded-md mb-2">
@@ -168,7 +168,7 @@ function setFilter(value) {
       >
         <button
           :class="[
-            'w-28 rounded-full  hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
+            'w-28 rounded-full hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
             filter === 'all'
               ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
               : 'bg-gray-200 hover:bg-gray-400 duration-300',
@@ -181,7 +181,7 @@ function setFilter(value) {
           :class="[
             'w-28 rounded-full hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
             filter === 'finished'
-              ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
+              ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300 '
               : 'bg-gray-200 hover:bg-gray-400 duration-300',
           ]"
           @click="setFilter('finished')"
