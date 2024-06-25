@@ -111,7 +111,7 @@ function setFilter(value) {
             :key="todo.id"
             class="flex hover:bg-slate-200 rounded-md p-1 border"
           >
-            <div class="flex justify-center items-center ml-2">
+            <div class="flex py-1.5 ml- p-1">
               <input
                 :checked="todo.isFinished"
                 @change="toggleFinished(todo.id)"
@@ -120,22 +120,24 @@ function setFilter(value) {
               />
             </div>
             <div
-              class="flex-1 flex ml-4 h-fit w-3 overflow-x-auto font-serif font-semibold items-center"
+              class="ml-2 mt-0.5 flex font-serif font-semibold"
               :class="
-                todo.isFinished ? ' line-through text-blue-600' : 'text-black'
+                todo.isFinished ? 'line-through text-blue-600' : 'text-black'
               "
             >
-              {{ todo.text }}
+              <div class="break-words w-56">
+                {{ todo.text }}
+              </div>
             </div>
             <button
-              class="flex justify-center items-center ml-2 opacity-50"
+              class="flex py-0.5 ml-2 opacity-50"
               @click="deleteTodo(todo.id)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                class="hover:scale-150 duration-500"
+                width="25"
+                height="25"
+                class="hover:scale-125 duration-500"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -144,15 +146,12 @@ function setFilter(value) {
                 />
               </svg>
             </button>
-            <button
-              class="flex justify-center items-center ml-2"
-              @click="toggleFavorite(todo.id)"
-            >
+            <button class="flex py-1 ml-2" @click="toggleFavorite(todo.id)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                class="hover:scale-150 duration-500"
+                width="23"
+                height="23"
+                class="hover:scale-125 duration-500"
                 viewBox="0 0 24 24"
                 :fill="todo.isFavorite ? 'red' : 'gray'"
               >
