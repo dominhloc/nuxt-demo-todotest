@@ -111,16 +111,16 @@ function setFilter(value) {
             :key="todo.id"
             class="flex hover:bg-slate-200 rounded-md p-1 border"
           >
-            <div class="w-7 h-7 flex justify-center items-center">
+            <div class=" flex justify-center items-center">
               <input
                 :checked="todo.isFinished"
                 @change="toggleFinished(todo.id)"
                 type="checkbox"
-                class="h-4 w-4 hover:scale-125 duration-300"
+                class="h-4 w-4 hover:scale-125 duration-500"
               />
             </div>
             <div
-              class="flex-1 flex ml-2 h-fit w-3 overflow-x-auto font-serif font-semibold items-center"
+              class="flex-1 flex ml-4 h-fit w-3 overflow-x-auto font-serif font-semibold items-center"
               :class="
                 todo.isFinished ? ' line-through text-blue-600' : 'text-black'
               "
@@ -128,7 +128,7 @@ function setFilter(value) {
               {{ todo.text }}
             </div>
             <button
-              class="h-7 w-7 flex justify-center items-center ml-2 hover:scale-125 duration-300 opacity-50"
+              class=" flex justify-center items-center ml-2 hover:scale-150 duration-500 opacity-50"
               @click="deleteTodo(todo.id)"
             >
               <svg
@@ -144,7 +144,7 @@ function setFilter(value) {
               </svg>
             </button>
             <button
-              class="h-7 w-7 flex justify-center items-center ml-2 hover:scale-125 duration-300"
+              class=" flex justify-center items-center ml-2 hover:scale-150 duration-500"
               @click="toggleFavorite(todo.id)"
             >
               <svg

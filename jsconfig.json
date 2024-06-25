@@ -1,14 +1,22 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true,
-    "jsx": "preserve",
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "allowImportingTsExtensions": true,
+    "allowJs": true,                // Cho phép biên dịch các file JavaScript
+    "checkJs": true,                // Bật kiểm tra lỗi trong file JavaScript
+    "jsx": "preserve",              // Giữ nguyên cú pháp JSX (nếu bạn sử dụng React)
+    "target": "ESNext",             // Chọn phiên bản ECMAScript mới nhất
+    "module": "ESNext",             // Sử dụng module system mới nhất
+    "moduleResolution": "Bundler",  // Sử dụng phương thức giải quyết module của Bundler
+    "allowImportingTsExtensions": true, // Cho phép import các file có phần mở rộng .ts
+    "baseUrl": ".",                 // Cơ sở đường dẫn cho các module
+    "paths": {                      // Thiết lập alias cho các thư mục
+      "@/*": ["src/*"]
+    },
+    "lib": ["dom", "esnext"],       // Thư viện mà trình biên dịch sẽ sử dụng
+    "skipLibCheck": true            // Bỏ qua kiểm tra kiểu trong các tệp khai báo
   },
+  "include": ["src/**/*"],          // Bao gồm tất cả các file trong thư mục src
+  "exclude": ["node_modules"],      // Loại trừ thư mục node_modules khỏi kiểm tra
   "vueCompilerOptions": {
-    "target": 3.3
+    "target": 3.3                   // Đảm bảo Vue compiler hướng đến phiên bản Vue 3.3
   }
 }

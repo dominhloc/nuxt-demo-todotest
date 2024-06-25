@@ -1,7 +1,6 @@
 // Import defineStore từ thư viện Pinia
 import { defineStore } from "pinia";
 
-// @ts-ignore
 // Bỏ qua lỗi kiểm tra kiểu dữ liệu TypeScript vì Pinia có thể dẫn đến những lỗi này
 export const useTodos = defineStore("todos", {
   // Định nghĩa state của store
