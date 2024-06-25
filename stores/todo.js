@@ -2,7 +2,8 @@
 import { defineStore } from "pinia";
 
 // Bỏ qua lỗi kiểm tra kiểu dữ liệu TypeScript vì Pinia có thể dẫn đến những lỗi này
-export const useTodos = defineStore("todos", {
+export const useTodos = defineStore({
+  id: "todos",
   // Định nghĩa state của store
   state: () => ({
     todos: [], // Danh sách các todo
@@ -29,8 +30,7 @@ export const useTodos = defineStore("todos", {
       // Nếu state.filter là "finished"
       if (state.filter === "finished") {
         // Lọc và trả về danh sách các todo đã hoàn thành.
-        return state.todos.filter((todo) => todo.isFinished);
-        // Nếu state.filter là "unfinished"
+        return state.todos.filter((todo) => todo.isFinished); // Nếu state.filter là "unfinished"
       } else if (state.filter === "unfinished") {
         // Lọc và trả về danh sách các todo chưa hoàn thành.
         return state.todos.filter((todo) => !todo.isFinished);
@@ -102,7 +102,7 @@ export const useTodos = defineStore("todos", {
       }
     },
   },
-
   // Lựa chọn persist: true để Pinia tự động lưu trữ và khôi phục state khi cần thiết
+  // @ts-ignore
   persist: true,
 });
