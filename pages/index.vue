@@ -52,7 +52,7 @@ function setFilter(value) {
   <div
     class="h-screen w-screen bg-gradient-to-r from-purple-500 to-pink-500 flex-col flex justify-center items-center"
   >
-    <div class="p-4 h-fit w-96 bg-white rounded-md shadow-2xl">
+    <div class="p-5 h-fit w-[405px] bg-white rounded-md shadow-2xl">
       <div class="flex flex-row justify-center items-center rounded-md mb-2">
         <div>
           <PiniaLogo />
@@ -62,14 +62,14 @@ function setFilter(value) {
         >
           New Todo
         </div>
-        <div>
+        <div class="">
           <PiniaLogo />
         </div>
       </div>
       <div class="flex space-x-2 flex-row justify-center h-8">
         <label>
           <input
-            class="border rounded-md p-1 h-8 w-72 bg-slate-200 flex justify-center items-center"
+            class="border rounded-md p-1 h-8 w-72 shadow-md bg-slate-200 flex justify-center items-center"
             v-model="newTodoText"
             type="text"
             @keypress.enter="addTodo"
@@ -77,7 +77,7 @@ function setFilter(value) {
           />
         </label>
         <button
-          class="bg-blue-500 hover:bg-blue-800 hover:scale-110 duration-300 text-white w-36 rounded-md"
+          class="bg-blue-500 shadow-md hover:bg-blue-800 hover:scale-110 duration-300 text-white w-36 rounded-md"
           :disabled="!newTodoText"
           @click="addTodo"
         >
@@ -121,22 +121,21 @@ function setFilter(value) {
             <div
               class="ml-2 mt-0.5 flex font-serif font-semibold"
               :class="
-                todo.isFinished ? 'line-through text-blue-600' : 'text-black'
+                todo.isFinished
+                  ? 'line-through text-blue-600 italic'
+                  : 'text-black'
               "
             >
-              <div class="break-all w-56">
+              <div class="break-all w-60">
                 {{ todo.text }}
               </div>
             </div>
-            <button
-              class="flex py-0.5 ml-2 opacity-50"
-              @click="deleteTodo(todo.id)"
-            >
+            <button class="flex py-0.5 ml-2" @click="deleteTodo(todo.id)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"
-                class="hover:scale-125 duration-500"
+                class="hover:scale-125 duration-500 opacity-60"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -152,7 +151,11 @@ function setFilter(value) {
                 height="23"
                 class="hover:scale-125 duration-500"
                 viewBox="0 0 24 24"
-                :fill="todo.isFavorite ? 'red' : 'gray'"
+                :class="
+                  todo.isFavorite
+                    ? 'fill-red-600 stroke-cyan-500'
+                    : 'opacity-60'
+                "
               >
                 <path
                   d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"
@@ -170,7 +173,7 @@ function setFilter(value) {
           :class="[
             'w-28 rounded-full hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
             filter === 'all'
-              ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
+              ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300 shadow-lg shadow-blue-500/50'
               : 'bg-gray-200 hover:bg-gray-400 duration-300',
           ]"
           @click="setFilter('all')"
@@ -181,7 +184,7 @@ function setFilter(value) {
           :class="[
             'w-28 rounded-full hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
             filter === 'finished'
-              ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300 '
+              ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300 shadow-lg shadow-blue-500/50 '
               : 'bg-gray-200 hover:bg-gray-400 duration-300',
           ]"
           @click="setFilter('finished')"
@@ -192,7 +195,7 @@ function setFilter(value) {
           :class="[
             'w-28 rounded-full hover:scale-110 duration-300 hover:font-semibold shadow-md text-sm',
             filter === 'unfinished'
-              ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300'
+              ? 'bg-blue-500 text-white hover:bg-blue-800 duration-300 shadow-lg shadow-blue-500/50'
               : 'bg-gray-200 hover:bg-gray-400 duration-300',
           ]"
           @click="setFilter('unfinished')"
